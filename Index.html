@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Expense Tracker</h2>
+
+<input type="text" id="name" placeholder="Expense Name">
+<input type="number" id="amount" placeholder="Amount">
+
+<button id="add">Add Expense</button>
+<button id="clear">Clear All</button>
+
+<h3 id="total">Total: ₹0</h3>
+
+<div id="output"></div>
+
+<script>
+
+let expenseName = document.querySelector("#name");
+let amount = document.querySelector("#amount");
+let add = document.querySelector("#add");
+let clear = document.querySelector("#clear");
+let output = document.querySelector("#output");
+let total = document.querySelector("#total");
+
+let expenses = JSON.parse(localStorage.getItem("expenses")) || [];
+
+show();
+
+add.addEventListener("click", function(){
+    expenses.push({name:expenseName.value,ex:amount.value
+        
+    })
+    localStorage.setItem("expenses",JSON.stringify(expenses));
+show();
+expenseName.value="";
+amount.value="";
+});
+function show(){
+    let t=0;
+    let te="";
+    for(let i=0;i<expenses.length;i++){
+        t=t+Number(expenses[i].ex);
+        te+=
+        "Expense: " + expenses[i].name +
+        "<br>Amount: ₹" + expenses[i].ex +
+        "<br><button onclick='deleteExpense(" + i + ")'>Delete</button><hr>";
+    }
+    output.innerHTML=te;
+    total.innerHTML="total:"+t;
+    
+}
+function deleteExpense(index){
+    expenses.splice(index,1);
+    localStorage.setItem("expenses",JSON.stringify(expenses));
+    show();
+}
+ 
+  clear.addEventListener("click",function(){
+      expenses=[];
+      localStorage.setItem("expenses",JSON.stringify(expenses)
+          
+      )
+      show();
+  })
+    
+
+</script>
+
+</body>
+</html>
